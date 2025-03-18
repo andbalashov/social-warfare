@@ -3,7 +3,7 @@ Contributors: holas84, webinator, warfareplugins, cdegraff1, goqflash, andbalash
 Tags: sharing buttons, social media share, floating share buttons, social sharing plugin, share buttons
 Requires at least: 4.5.0
 Tested up to: 6.7.2
-Stable tag: 4.5.5
+Stable tag: 4.5.6
 Requires PHP: 5.6
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -240,13 +240,18 @@ This changelog covers version 4.5.0 and later. The full changelog can be found o
 
 == Changelog ==
 
+= 4.5.6 (13 Mar 2025) =
+Security fix: Properly sanitize and escape clickToTweet attributes to prevent stored XSS.
+Sanitized the theme attribute using sanitize_html_class().
+Escaped shortcode output with esc_attr() and esc_html() to prevent injection.
+Secured tweet input by using sanitize_text_field().
+
 = 4.5.5 (26 Feb 2025) =
 * Enhanced security by replacing `strip_tags()` with `wp_strip_all_tags()` and using `esc_html()` and `wp_kses()` for safer output.
 * Improved JSON security by switching from `json_encode()` to `wp_json_encode()`.
 * Added compatibility check for `WpOrg\Requests\Requests` to prevent errors on older WordPress versions.
 * Refactored Gutenberg Blocks for safer HTML output and improved CSS consistency.
 * Removed outdated config files from `assets/js/post-editor/`.
-* General cleanup, minor style adjustments, and improved code readability.
 
 = 4.5.3 (12 Aug 2024) =
 * Updated stable tag and version numbers to 4.5.3.
