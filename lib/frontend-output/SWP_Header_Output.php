@@ -99,19 +99,28 @@ class SWP_Header_Output {
 			
 			$allowed_html = array(
 				'meta' => array(
-					'name'    => array(),
-					'content' => array(),
-					'property'=> array(),
+					'name'       => array(),
+					'content'    => array(),
+					'property'   => array(),
 					'http-equiv' => array(),
-					'charset' => array(),
+					'charset'    => array(),
 				),
 				'style' => array(
-					'type' => array(),
-					'media' => array(),
+					'type'   => array(),
+					'media'  => array(),
 					'scoped' => array(),
 				),
-			);			
-		
+				'link' => array(
+					'rel'   => array(),
+					'href'  => array(),
+					'sizes' => array(),
+					'type'  => array(),
+				),
+				'script' => array(
+					'src'  => array(),
+					'type' => array(),
+				),
+			);
 			echo wp_kses( $meta_html, $allowed_html );
 
 			echo PHP_EOL . '<!-- Social Warfare v' . esc_html( SWP_VERSION ) . ' https://warfareplugins.com - END OF OUTPUT -->' . PHP_EOL . PHP_EOL;
@@ -147,9 +156,9 @@ class SWP_Header_Output {
 		 * only be generated one time. If it's already been generated and exists
 		 * in this string, then bail out.
 		 */
-		if ( ! empty( $meta_html ) && strpos( $meta_html, 'font-family: "sw-icon-font"' ) ) :
+		if ( ! empty( $meta_html ) && false !== strpos( $meta_html, 'font-family: "sw-icon-font"' ) ) {
 			return $meta_html;
-		endif;
+		}
 
 		/**
 		 * If, for some reason, we have something other than a string here,
@@ -159,32 +168,29 @@ class SWP_Header_Output {
 			$meta_html = '';
 		}
 
+		// Build our CSS snippet.
 		$style = '<style>
-	@font-face {
-		font-family: "sw-icon-font";
-		src:url("' . SWP_PLUGIN_URL . '/assets/fonts/sw-icon-font.eot?ver=' . SWP_VERSION . '");
-		src:url("' . SWP_PLUGIN_URL . '/assets/fonts/sw-icon-font.eot?ver=' . SWP_VERSION . '#iefix") format("embedded-opentype"),
-		url("' . SWP_PLUGIN_URL . '/assets/fonts/sw-icon-font.woff?ver=' . SWP_VERSION . '") format("woff"),
-		url("' . SWP_PLUGIN_URL . '/assets/fonts/sw-icon-font.ttf?ver=' . SWP_VERSION . '") format("truetype"),
-		url("' . SWP_PLUGIN_URL . '/assets/fonts/sw-icon-font.svg?ver=' . SWP_VERSION . '#1445203416") format("svg");
-		font-weight: normal;
-		font-style: normal;
-		font-display:block;
-	}
-</style>';
+						@font-face {
+							font-family: "sw-icon-font";
+							src:url("' . SWP_PLUGIN_URL . '/assets/fonts/sw-icon-font.eot?ver=' . SWP_VERSION . '");
+							src:url("' . SWP_PLUGIN_URL . '/assets/fonts/sw-icon-font.eot?ver=' . SWP_VERSION . '#iefix") format("embedded-opentype"),
+								url("' . SWP_PLUGIN_URL . '/assets/fonts/sw-icon-font.woff?ver=' . SWP_VERSION . '") format("woff"),
+								url("' . SWP_PLUGIN_URL . '/assets/fonts/sw-icon-font.ttf?ver=' . SWP_VERSION . '") format("truetype"),
+								url("' . SWP_PLUGIN_URL . '/assets/fonts/sw-icon-font.svg?ver=' . SWP_VERSION . '#1445203416") format("svg");
+							font-weight: normal;
+							font-style: normal;
+							font-display:block;
+						}
+					</style>';
 
 		/**
 		 * If we are in the admin area, then we need to echo this string
 		 * directly to the screen. Otherwise, we're going to return the string
 		 * so that it will get output via the header hook.
 		 */
-		if ( true === is_admin() ) {
+		if ( is_admin() ) {
 			echo wp_kses( $style, array( 'style' => array() ) );
 		} else {
-			if ( empty( $meta_html ) ) :
-				$meta_html = '';
-			endif;
-
 			$meta_html .= $style;
 		}
 
