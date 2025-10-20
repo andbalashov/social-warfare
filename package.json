@@ -29,7 +29,7 @@
 	},
 	"devDependencies": {
 		"@wordpress/env": "^10.19.0",
-		"@wordpress/scripts": "^30.11.0"
+		"@wordpress/scripts": "^30.26.0"
 	},
 	"dependencies": {
 		"@wordpress/icons": "^10.19.0"
