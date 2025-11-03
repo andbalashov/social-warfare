@@ -101,7 +101,13 @@ class SWP_Registration_Tab_Template extends SWP_Option {
 
 			$html .= '<div class="sw-red-notice">';
 				// translators: %s is the name of the plugin.
-				$html .= sprintf( esc_html__( 'This copy of %s is NOT registered. <a target="_blank" href="https://warfareplugins.com">Click here</a> to purchase a license or add your account info below.', 'social-warfare' ), $this->name );
+				$allowed_html = array(
+					'a' => array(
+						'href' => array(),
+						'target' => array(),
+					)
+				);
+				$html .= sprintf( wp_kses( __( 'This copy of %s is NOT registered. <a target="_blank" href="https://warfareplugins.com">Click here</a> to purchase a license or add your account info below.', 'social-warfare' ), $allowed_html ), $this->name );
 			$html     .= '</div>';
 
 			$html .= '<p class="sw-subtitle sw-registration-text">';
